@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dossier_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textViewNameDossier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="center" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/layoutChambres"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/labelListChambres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_weight="1"
+            android:text="Chambres:" />
+
+        <Button
+            android:id="@+id/buttonNewChambre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Add" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listViewChambres"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_weight="10">
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/layoutInstallations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/labelListInstallations"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_weight="1"
+            android:text="Installations electrique:" />
+
+        <Button
+            android:id="@+id/buttonNewInstallation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Add" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listViewInstallations"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_weight="10">
+
+    </ListView>
+
+
+
+</LinearLayout>
+
+</ScrollView>

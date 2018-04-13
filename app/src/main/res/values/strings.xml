@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PlantaPolApps</string>
+    <string name="action_settings">Settings</string>
+    <string name="new_dossier_label">Veuillez inscrire un nom de dossier</string>
+    <string name="hint_name_dossier">Nom du dossier ici</string>
+    <string name="button_next">Suivant</string>
+    <string name="button_cancel">Annuler</string>
+</resources>
+
