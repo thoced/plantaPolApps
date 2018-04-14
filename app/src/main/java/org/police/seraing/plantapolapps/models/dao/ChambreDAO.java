@@ -28,20 +28,21 @@ public class ChambreDAO extends DAO<ChambreModel> {
         value.put("nbPlants",model.getNbPlants());
         value.put("nbPlantsM2",model.getNbPlantsM2());
         value.put("hauteurPlants",model.getHauteurPlants());
-        value.put("taillePots",model.getHauteurPlants());
-        value.put("nbLampes",model.getHauteurPlants());
-        value.put("puissanceLampes",model.getHauteurPlants());
-        value.put("marqueLampes",model.getHauteurPlants());
-        value.put("modifLampes",model.getHauteurPlants());
-        value.put("nbExtracteurs",model.getHauteurPlants());
-        value.put("marqueExtracteurs",model.getHauteurPlants());
-        value.put("nbFiltres",model.getHauteurPlants());
-        value.put("nbVentilateurs",model.getHauteurPlants());
-        value.put("marqueVentilateurs",model.getHauteurPlants());
-        value.put("puissanceVentilateurs",model.getHauteurPlants());
-        value.put("nbChauffages",model.getHauteurPlants());
-        value.put("marqueChauffages",model.getHauteurPlants());
-        value.put("puissanceChauffages",model.getHauteurPlants());
+        value.put("taillePots",model.getTaillePots());
+        value.put("nbLampes",model.getNbLampes());
+        value.put("puissanceLampes",model.getPuissanceLampes());
+        value.put("marqueLampes",model.getMarqueLampes());
+        value.put("modifLampes",model.getModifLampes());
+        value.put("nbExtracteurs",model.getNbExtracteurs());
+        value.put("marqueExtracteurs",model.getMarqueExtracteurs());
+        value.put("nbFiltres",model.getNbFiltres());
+        value.put("marqueFiltres",model.getMarqueFiltres());
+        value.put("nbVentilateurs",model.getNbVentilateurs());
+        value.put("marqueVentilateurs",model.getMarqueVentilateurs());
+        value.put("puissanceVentilateurs",model.getPuissanceVentilateurs());
+        value.put("nbChauffages",model.getNbChauffages());
+        value.put("marqueChauffages",model.getMarqueChauffages());
+        value.put("puissanceChauffages",model.getPuissanceChauffages());
         value.put("ref_dossier",model.getRef_dossier());
 
         long rowid = DAOFactory.getInstance(getContext()).open().insert(TABLE_NAME,null,value);
@@ -68,6 +69,7 @@ public class ChambreDAO extends DAO<ChambreModel> {
         value.put("nbExtracteurs", model.getNbExtracteurs());
         value.put("marqueExtracteurs", model.getMarqueExtracteurs());
         value.put("nbFiltres", model.getNbFiltres());
+        value.put("marqueFiltres",model.getMarqueFiltres());
         value.put("nbVentilateurs", model.getNbVentilateurs());
         value.put("marqueVentilateurs", model.getMarqueVentilateurs());
         value.put("puissanceVentilateurs", model.getPuissanceVentilateurs());
@@ -109,6 +111,7 @@ public class ChambreDAO extends DAO<ChambreModel> {
             chambreModel.setNbExtracteurs(cursor.getString(cursor.getColumnIndex("nbExtracteurs")));
             chambreModel.setMarqueExtracteurs(cursor.getString(cursor.getColumnIndex("marqueExtracteurs")));
             chambreModel.setNbFiltres(cursor.getString(cursor.getColumnIndex("nbFiltres")));
+            chambreModel.setMarqueFiltres(cursor.getString(cursor.getColumnIndex("marqueFiltres")));
             chambreModel.setNbVentilateurs(cursor.getString(cursor.getColumnIndex("nbVentilateurs")));
             chambreModel.setMarqueVentilateurs(cursor.getString(cursor.getColumnIndex("marqueVentilateurs")));
 
@@ -148,6 +151,7 @@ public class ChambreDAO extends DAO<ChambreModel> {
             chambreModel.setNbExtracteurs(cursor.getString(cursor.getColumnIndex("nbExtracteurs")));
             chambreModel.setMarqueExtracteurs(cursor.getString(cursor.getColumnIndex("marqueExtracteurs")));
             chambreModel.setNbFiltres(cursor.getString(cursor.getColumnIndex("nbFiltres")));
+            chambreModel.setMarqueFiltres(cursor.getString(cursor.getColumnIndex("marqueFiltres")));
             chambreModel.setNbVentilateurs(cursor.getString(cursor.getColumnIndex("nbVentilateurs")));
             chambreModel.setMarqueVentilateurs(cursor.getString(cursor.getColumnIndex("marqueVentilateurs")));
 
@@ -188,6 +192,7 @@ public class ChambreDAO extends DAO<ChambreModel> {
             chambreModel.setNbExtracteurs(cursor.getString(cursor.getColumnIndex("nbExtracteurs")));
             chambreModel.setMarqueExtracteurs(cursor.getString(cursor.getColumnIndex("marqueExtracteurs")));
             chambreModel.setNbFiltres(cursor.getString(cursor.getColumnIndex("nbFiltres")));
+            chambreModel.setMarqueFiltres(cursor.getString(cursor.getColumnIndex("marqueFiltres")));
             chambreModel.setNbVentilateurs(cursor.getString(cursor.getColumnIndex("nbVentilateurs")));
             chambreModel.setMarqueVentilateurs(cursor.getString(cursor.getColumnIndex("marqueVentilateurs")));
 

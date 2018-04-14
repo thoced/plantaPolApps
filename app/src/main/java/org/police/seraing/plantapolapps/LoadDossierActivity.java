@@ -1,15 +1,18 @@
 package org.police.seraing.plantapolapps;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.police.seraing.plantapolapps.adapters.AdapterListDossiers;
 import org.police.seraing.plantapolapps.models.DossierModel;
 import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 import org.police.seraing.plantapolapps.models.dao.SQLiteCustom;
@@ -42,9 +45,10 @@ public class LoadDossierActivity extends Activity {
 
     private void updateListView() {
 
-        ArrayAdapter<DossierModel> arrayAdapter = new ArrayAdapter<DossierModel>(this,android.R.layout.simple_list_item_1,listDossiers);
+        AdapterListDossiers adapterListDossiers = new AdapterListDossiers(this,listDossiers);
         ListView listDossiers = findViewById(R.id.listDossiers);
-        listDossiers.setAdapter(arrayAdapter);
+        listDossiers.setAdapter(adapterListDossiers);
+
     }
 
     private void loadDossiers() {

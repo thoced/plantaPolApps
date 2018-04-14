@@ -24,7 +24,6 @@ public class NameNewDossierActivity extends Activity {
 
         setContentView(R.layout.newdossier_layout);
 
-        model = this.getIntent().getParcelableExtra("DOSSIER");
 
         Button buttonNext = findViewById(R.id.buttonNext);
         if(buttonNext != null){
@@ -32,13 +31,13 @@ public class NameNewDossierActivity extends Activity {
                 @Override
                 public void onClick(View v) {
 
-
+                    model = new DossierModel();
                     TextView textView = findViewById(R.id.nameDossierTextField);
                     model.setNomDossier(textView.getText().toString());
                     model.setDateTime(getCurrentTimeStamp());
 
                     // enregistrement dans la base
-                    DAOFactory.getInstance(NameNewDossierActivity.this).createDOSSIERDAO().insert(model);
+                    model = (DossierModel) DAOFactory.getInstance(NameNewDossierActivity.this).createDOSSIERDAO().insert(model);
 
                     Intent intent = new Intent(NameNewDossierActivity.this,DossierActivity.class);
                     intent.putExtra("DOSSIER",model);

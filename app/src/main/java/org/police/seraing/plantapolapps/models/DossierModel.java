@@ -32,7 +32,7 @@ public class DossierModel implements Parcelable {
         id = in.readLong();
         nomDossier = in.readString();
         dateTime = in.readString();
-        listChambres = in.readArrayList(ClassLoader.getSystemClassLoader());
+        listChambres = in.readArrayList(DossierModel.class.getClassLoader());
     }
 
     public static final Creator<DossierModel> CREATOR = new Creator<DossierModel>() {

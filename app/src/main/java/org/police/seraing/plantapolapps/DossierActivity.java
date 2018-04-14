@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.police.seraing.plantapolapps.models.ChambreModel;
 import org.police.seraing.plantapolapps.models.DossierModel;
 import org.police.seraing.plantapolapps.models.InstallationModel;
+import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 
 public class DossierActivity extends Activity {
 
@@ -34,10 +35,10 @@ public class DossierActivity extends Activity {
         setContentView(R.layout.dossier_layout);
 
         model = this.getIntent().getParcelableExtra("DOSSIER");
+        model = (DossierModel) DAOFactory.getInstance(this).createDOSSIERDAO().find(model.getId());
+
         TextView textViewNameDossier = findViewById(R.id.textViewNameDossier);
         textViewNameDossier.setText(model.getNomDossier());
-
-
 
         // Button Add
         Button buttonAddChambre = findViewById(R.id.buttonNewChambre);
@@ -47,6 +48,7 @@ public class DossierActivity extends Activity {
                 Intent intent = new Intent(DossierActivity.this,NewChambreActivity.class);
                 ChambreModel chambreModel = new ChambreModel();
                 intent.putExtra("CHAMBRE",chambreModel);
+                intent.putExtra("DOSSIER",model);
                 startActivityForResult(intent,BaseChambreActivity.RESULT_ENREGISTRER);
             }
         });
@@ -55,15 +57,15 @@ public class DossierActivity extends Activity {
         // ListView
         listViewChambres = findViewById(R.id.listViewChambres);
         if(listViewChambres != null){
-            arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1,model.getListChambres());
+            arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_expandable_list_item_1,model.getListChambres());
             listViewChambres.setAdapter(arrayAdapterChambres);
             listViewChambres.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                   ChambreModel chambreModel = model.getListChambres().get(position);
-
                   Intent intent = new Intent(DossierActivity.this,ModifChambreActivity.class);
                   intent.putExtra("CHAMBRE",chambreModel);
+                  intent.putExtra("DOSSIER",model);
                   startActivityForResult(intent,BaseChambreActivity.RESULT_MODIFIER);
                 }
             });
@@ -78,15 +80,15 @@ public class DossierActivity extends Activity {
 
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == BaseChambreActivity.RESULT_ENREGISTRER){
             if(data != null){
-                ChambreModel chambreModel = data.getParcelableExtra("CHAMBRE");
-                model.getListChambres().add(chambreModel);
-                arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1,model.getListChambres());
+                arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1, DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
                 listViewChambres.setAdapter(arrayAdapterChambres);
             }
         }
@@ -96,10 +98,8 @@ public class DossierActivity extends Activity {
             if(data != null){
                 ChambreModel chambreModel = data.getParcelableExtra("CHAMBRE");
               //  model.getListChambres().set(chambreModel.getPosition(),chambreModel);
-                arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1,model.getListChambres());
+                arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1,DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
                 listViewChambres.setAdapter(arrayAdapterChambres);
-
-
 
             }
         }

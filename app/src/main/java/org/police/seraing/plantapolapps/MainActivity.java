@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this,NameNewDossierActivity.class);
-                    DossierModel model = new DossierModel();
-                    intent.putExtra("DOSSIER",model);
                     startActivity(intent);
                 }
             });

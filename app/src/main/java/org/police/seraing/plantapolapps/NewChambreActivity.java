@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import org.police.seraing.plantapolapps.models.ChambreModel;
+import org.police.seraing.plantapolapps.models.DossierModel;
+import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 
 public class NewChambreActivity extends BaseChambreActivity {
 
@@ -20,12 +22,15 @@ public class NewChambreActivity extends BaseChambreActivity {
 
         setContentView(R.layout.newchambre_layout);
 
+       final DossierModel dossierModel = getIntent().getParcelableExtra("DOSSIER");
+
         findViewById(R.id.buttonEnregistrerChambre).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 createModel();
-                intent.putExtra("CHAMBRE",model);
+                model.setRef_dossier(dossierModel.getId());
+                model= (ChambreModel) DAOFactory.getInstance(NewChambreActivity.this).createCHAMBREDAO().insert(model);
                 setResult(BaseChambreActivity.RESULT_ENREGISTRER,intent);
                 finish();
             }

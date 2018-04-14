@@ -20,6 +20,9 @@ public class BaseChambreActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         model = getIntent().getParcelableExtra("CHAMBRE");
+
+        if(model == null)
+            model = new ChambreModel();
     }
 
     protected void createModel() {

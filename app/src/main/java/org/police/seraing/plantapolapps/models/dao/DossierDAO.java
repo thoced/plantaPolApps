@@ -35,6 +35,7 @@ public class DossierDAO extends DAO<DossierModel> {
         // suppression des chambres associées
         DAOFactory.getInstance(getContext()).createCHAMBREDAO().deleteFromForeignKey(model.getId());
         // fin de transaction atomique
+        DAOFactory.getInstance(getContext()).open().setTransactionSuccessful();
         DAOFactory.getInstance(getContext()).open().endTransaction();
         return model;
     }
@@ -63,6 +64,7 @@ public class DossierDAO extends DAO<DossierModel> {
             dossierModel.getListChambres().addAll(chambreModelList);
         }
         cursor.close();
+        DAOFactory.getInstance(getContext()).open().setTransactionSuccessful();
         DAOFactory.getInstance(getContext()).open().endTransaction();
         return dossierModel;
 
@@ -85,6 +87,7 @@ public class DossierDAO extends DAO<DossierModel> {
         }
 
         cursor.close();
+        DAOFactory.getInstance(getContext()).open().setTransactionSuccessful();
         DAOFactory.getInstance(getContext()).open().endTransaction();
 
         return list;
