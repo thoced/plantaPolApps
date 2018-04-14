@@ -38,26 +38,23 @@ public class LoadDossierActivity extends Activity {
             }
         });
 
-        loadDossiers();
-
-        updateListView();
-    }
-
-    private void updateListView() {
-
         AdapterListDossiers adapterListDossiers = new AdapterListDossiers(this,listDossiers);
         ListView listDossiers = findViewById(R.id.listDossiers);
         listDossiers.setAdapter(adapterListDossiers);
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadDossiers();
+    }
+
+
+
     private void loadDossiers() {
-
-        List<DossierModel> list = DAOFactory.getInstance(this).createDOSSIERDAO().selectAll();
         listDossiers.clear();
-        listDossiers.addAll(list);
-
-
+        listDossiers.addAll(DAOFactory.getInstance(this).createDOSSIERDAO().selectAll());
     }
 
 }

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.police.seraing.plantapolapps.adapters.AdapterListChambres;
 import org.police.seraing.plantapolapps.models.ChambreModel;
 import org.police.seraing.plantapolapps.models.DossierModel;
 import org.police.seraing.plantapolapps.models.InstallationModel;
@@ -25,7 +26,7 @@ public class DossierActivity extends Activity {
     private DossierModel model;
     private ListView listViewChambres;
     private ListView listViewInstallations;
-    private ArrayAdapter<ChambreModel> arrayAdapterChambres;
+    private AdapterListChambres arrayAdapterChambres;
     private ArrayAdapter<InstallationModel> arrayAdapterInstallations;
 
     @Override
@@ -53,34 +54,21 @@ public class DossierActivity extends Activity {
             }
         });
 
-
-        // ListView
+        // liste des chambres
+        arrayAdapterChambres = new AdapterListChambres(this,model.getListChambres());
         listViewChambres = findViewById(R.id.listViewChambres);
-        if(listViewChambres != null){
-            arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_expandable_list_item_1,model.getListChambres());
-            listViewChambres.setAdapter(arrayAdapterChambres);
-            listViewChambres.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  ChambreModel chambreModel = model.getListChambres().get(position);
-                  Intent intent = new Intent(DossierActivity.this,ModifChambreActivity.class);
-                  intent.putExtra("CHAMBRE",chambreModel);
-                  intent.putExtra("DOSSIER",model);
-                  startActivityForResult(intent,BaseChambreActivity.RESULT_MODIFIER);
-                }
-            });
-        }
-
-        listViewInstallations = findViewById(R.id.listViewChambres);
-        if(listViewInstallations != null){
-            arrayAdapterInstallations = new ArrayAdapter<InstallationModel>(this,android.R.layout.simple_list_item_1,model.getListInstallations());
-            listViewInstallations.setAdapter(arrayAdapterInstallations);
-
-        }
+        listViewChambres.setAdapter(arrayAdapterChambres);
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // resume des listes des chambres
+        arrayAdapterChambres.clear();
+        arrayAdapterChambres.addAll(DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,18 +76,18 @@ public class DossierActivity extends Activity {
 
         if(resultCode == BaseChambreActivity.RESULT_ENREGISTRER){
             if(data != null){
-                arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1, DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
-                listViewChambres.setAdapter(arrayAdapterChambres);
+               // arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1, DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
+             //   listViewChambres.setAdapter(arrayAdapterChambres);
             }
         }
 
         if(resultCode == BaseChambreActivity.RESULT_MODIFIER)
         {
             if(data != null){
-                ChambreModel chambreModel = data.getParcelableExtra("CHAMBRE");
+               // ChambreModel chambreModel = data.getParcelableExtra("CHAMBRE");
               //  model.getListChambres().set(chambreModel.getPosition(),chambreModel);
-                arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1,DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
-                listViewChambres.setAdapter(arrayAdapterChambres);
+              //  arrayAdapterChambres = new ArrayAdapter<ChambreModel>(this,android.R.layout.simple_list_item_1,DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
+                //listViewChambres.setAdapter(arrayAdapterChambres);
 
             }
         }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import org.police.seraing.plantapolapps.models.ChambreModel;
+import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 
 public class ModifChambreActivity extends BaseChambreActivity {
     @Override
@@ -25,6 +26,7 @@ public class ModifChambreActivity extends BaseChambreActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 createModel();
+                DAOFactory.getInstance(ModifChambreActivity.this).createCHAMBREDAO().update(model);
                 intent.putExtra("CHAMBRE",model);
                 setResult(BaseChambreActivity.RESULT_MODIFIER,intent);
                 finish();
