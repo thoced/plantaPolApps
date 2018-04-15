@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.police.seraing.plantapolapps.adapters.AdapterListChambres;
 import org.police.seraing.plantapolapps.models.ChambreModel;
@@ -68,6 +69,8 @@ public class DossierActivity extends Activity {
         // resume des listes des chambres
         arrayAdapterChambres.clear();
         arrayAdapterChambres.addAll(DAOFactory.getInstance(this).createCHAMBREDAO().selectFromForeignKey(model.getId()));
+
+        ;
     }
 
     @Override
