@@ -1,16 +1,24 @@
 package org.police.seraing.plantapolapps;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.police.seraing.plantapolapps.models.DossierModel;
+import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 import org.police.seraing.plantapolapps.models.dao.SQLiteCustom;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +39,37 @@ public class MainActivity extends AppCompatActivity {
             buttonNewPlantation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this,NameNewDossierActivity.class);
-                    startActivity(intent);
+                   // Intent intent = new Intent(MainActivity.this,NameNewDossierActivity.class);
+                    //startActivity(intent);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+
+
+                    builder.setView(inflater.inflate(R.layout.dialognewdossier_layout, null))
+                            .setTitle("Nouveau dossier")
+                            .setMessage("Veuillez inscrire le nom du dossier")
+                            .setPositiveButton("Enregistrer", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DossierModel model = new DossierModel();
+
+                                    EditText editNomDossier = ((AlertDialog)dialog).findViewById(R.id.editNewNameDossier);
+                                    model.setNomDossier(editNomDossier.getText().toString());
+                                    model.setDateTime(getCurrentTimeStamp());
+
+                                    // enregistrement dans la base
+                                    model = (DossierModel) DAOFactory.getInstance(MainActivity.this).createDOSSIERDAO().insert(model);
+
+                                    Intent intent = new Intent(MainActivity.this,DossierActivity.class);
+                                    intent.putExtra("DOSSIER",model);
+                                    startActivity(intent);
+                                }
+                            });
+
+
+                    builder.create().show();
+
+
                 }
             });
         }
@@ -85,5 +122,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
     }
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimary">#FF78B0D3</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorButtonEnregistrer">#30FF20</color>
+    <color name="colorButtonEnregistrer">#30ff20</color>
     <color name="colorButtonAnnuler">#FF8010</color>
+    <color name="colorListItems">#b7d891</color>
+    <color name="colorLayoutDelete">#e68f51</color>
 </resources>

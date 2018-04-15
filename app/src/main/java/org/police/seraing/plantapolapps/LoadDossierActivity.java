@@ -51,10 +51,11 @@ public class LoadDossierActivity extends Activity {
     }
 
 
-
     private void loadDossiers() {
         listDossiers.clear();
         listDossiers.addAll(DAOFactory.getInstance(this).createDOSSIERDAO().selectAll());
     }
+
+
 
 }

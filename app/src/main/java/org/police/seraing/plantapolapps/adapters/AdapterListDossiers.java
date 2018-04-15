@@ -1,6 +1,9 @@
 package org.police.seraing.plantapolapps.adapters;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,17 +42,29 @@ public class AdapterListDossiers extends ArrayAdapter<DossierModel> {
     }
 
         TextView textNomDossier = convertView.findViewById(R.id.textNomDossier);
+        TextView textDateDossier = convertView.findViewById(R.id.textDateDossier);
         Button   buttonDossier = convertView.findViewById(R.id.buttonDossier);
         buttonDossier.setTag(model);
         textNomDossier.setText(model.getNomDossier());
+        textDateDossier.setText(model.getDateTime());
 
         buttonDossier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DossierModel model = (DossierModel) v.getTag();
-                DAOFactory.getInstance(getContext()).createDOSSIERDAO().delete(model);
-                AdapterListDossiers.this.clear();
-                AdapterListDossiers.this.addAll(DAOFactory.getInstance(getContext()).createDOSSIERDAO().selectAll());
+                final DossierModel model = (DossierModel) v.getTag();
+                // 1. Instantiate an AlertDialog.Builder with its constructor
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Voulez vous supprimer ce dossier ?")
+                        .setTitle("Confirmation de suppression").setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DAOFactory.getInstance(getContext()).createDOSSIERDAO().delete(model);
+                        AdapterListDossiers.this.clear();
+                        AdapterListDossiers.this.addAll(DAOFactory.getInstance(getContext()).createDOSSIERDAO().selectAll());
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
             }
         });

@@ -20,7 +20,6 @@ class SModel {
     }
 
 
-
     private SModel() {
     }
 
@@ -28,4 +27,6 @@ class SModel {
         currentDossierModel = model;
         DAOFactory.getInstance(context).createDOSSIERDAO().insert(currentDossierModel);
     }
+
+
 }
