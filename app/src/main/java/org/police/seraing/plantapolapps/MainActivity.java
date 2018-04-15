@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,16 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import org.police.seraing.plantapolapps.models.DossierModel;
 import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 import org.police.seraing.plantapolapps.models.dao.SQLiteCustom;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -84,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
 
 
     }
