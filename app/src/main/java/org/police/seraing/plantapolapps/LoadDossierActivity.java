@@ -42,6 +42,8 @@ public class LoadDossierActivity extends Activity {
         ListView listDossiers = findViewById(R.id.listDossiers);
         listDossiers.setAdapter(adapterListDossiers);
 
+
+
     }
 
     @Override

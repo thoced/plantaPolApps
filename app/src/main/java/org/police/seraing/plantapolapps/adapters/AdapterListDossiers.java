@@ -74,6 +74,7 @@ public class AdapterListDossiers extends ArrayAdapter<DossierModel> {
             @Override
             public void onClick(View v) {
                DossierModel model = (DossierModel) v.getTag();
+               DAOFactory.getInstance(getContext()).createDOSSIERDAOXML().insert(model);
                Intent  intent = new Intent(getContext(), DossierActivity.class);
                intent.putExtra("DOSSIER",model);
                getContext().startActivity(intent);

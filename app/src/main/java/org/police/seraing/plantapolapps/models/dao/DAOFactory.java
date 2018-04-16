@@ -11,10 +11,11 @@ public class DAOFactory {
 
     private static Context context;
 
-    private  static SQLiteCustom connection;
+    private static SQLiteCustom connection;
 
 
     private DAOFactory(Context context) {
+
        connection = new SQLiteCustom(context,"DB_plantation",null);
 
     }
@@ -24,7 +25,7 @@ public class DAOFactory {
     }
 
     public static DAOFactory getInstance(Context context){
-        context = context;
+        DAOFactory.context = context;
 
         if(instance == null)
             instance = new DAOFactory(context);
@@ -37,7 +38,11 @@ public class DAOFactory {
     }
 
     public DAO createCHAMBREDAO(){
-          return new ChambreDAO(connection,context);
+        return new ChambreDAO(connection,context);
+    }
+
+    public DAO createDOSSIERDAOXML() {
+        return new org.police.seraing.plantapolapps.models.dao.xml.DossierDAO(connection,context);
     }
 
 
