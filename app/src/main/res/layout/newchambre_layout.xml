@@ -342,6 +342,32 @@
         android:inputType="none"
         android:hint="iinformations relatives aux chauffages" />
 
+    <TextView
+        android:id="@+id/textPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Photos:" />
+
+    <Button
+        android:id="@+id/buttonAddPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:padding="16dp"
+        android:text="Prendre une photo" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearPhotoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,26 +1,42 @@
 package org.police.seraing.plantapolapps;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import org.police.seraing.plantapolapps.models.ChambreModel;
+import org.police.seraing.plantapolapps.models.PhotoModel;
 import org.police.seraing.plantapolapps.models.dao.DAOFactory;
 
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
+
 public class ModifChambreActivity extends BaseChambreActivity {
+
+    private LinearLayout linearPhotoLayout;
+
+    private List<PhotoModel> listPhotos = new ArrayList<PhotoModel>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.modifchambre_layout);
+        setContentView(R.layout.newchambre_layout);
+
 
         refreshFieldView();
 
-        Button buttonModif = findViewById(R.id.buttonModifChambre);
+        Button buttonModif = findViewById(R.id.buttonEnregistrerChambre);
+        buttonModif.setText("Modifier");
         buttonModif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +89,19 @@ public class ModifChambreActivity extends BaseChambreActivity {
             ((EditText)findViewById(R.id.editNbChauffages)).setText(model.getNbChauffages());
             ((EditText)findViewById(R.id.editInfoChauffages)).setText(model.getMarqueChauffages());
             ((EditText)findViewById(R.id.editPuissanceChauffages)).setText(model.getPuissanceChauffages());
+
+            // refresh photos
+            linearPhotoLayout = findViewById(R.id.linearPhotoLayout);
+            for(PhotoModel photoModel : model.getListPhotos()) {
+                ImageView imageView = new ImageView(this);
+                Bitmap bitmap = Bitmap.createBitmap(photoModel.getWidth(), photoModel.getHeight(), Bitmap.Config.ARGB_8888);
+                bitmap.copyPixelsFromBuffer(ByteBuffer.wrap(photoModel.getRaw()));
+                imageView.setImageBitmap(bitmap);
+                imageView.setPadding(16,16,16,16);
+                linearPhotoLayout.addView(imageView);
+            }
+
+
 
     }
 }

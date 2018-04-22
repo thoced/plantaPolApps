@@ -41,6 +41,8 @@ public class DAOFactory {
         return new ChambreDAO(connection,context);
     }
 
+    public DAO createPHOTODAO() { return new PhotoDAO(connection,context);}
+
     public DAO createDOSSIERDAOXML() {
         return new org.police.seraing.plantapolapps.models.dao.xml.DossierDAO(connection,context);
     }

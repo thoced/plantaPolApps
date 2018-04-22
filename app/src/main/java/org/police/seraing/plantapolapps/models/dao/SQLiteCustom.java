@@ -7,10 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteCustom extends SQLiteOpenHelper {
 
     public static final String NAME_DB = "db_plantation";
-    public static final int    VERSION = 1;
+    public static final int    VERSION = 7;
 
     public static final String METIER_TABLE_DOSSIER = "t_dossiers";
     public static final String METIER_TABLE_CHAMBRE = "t_chambres";
+    public static final String METIER_TABLE_PHOTO =   "t_photos";
     public static final String METIER_ID_NAME = "id";
     public static final String METIER_NAME_DOSSIER = "nom";
     public static final String METIER_NAME_CHAMBRE = "nom";
@@ -18,6 +19,8 @@ public class SQLiteCustom extends SQLiteOpenHelper {
     public static final String METIER_DROP_DOSSIERS = "drop table IF EXISTS " + METIER_TABLE_DOSSIER;
 
     public static final String METIER_DROP_CHAMBRES = "drop table IF EXISTS " + METIER_TABLE_CHAMBRE;
+
+    public static final String METIER_DROP_PHOTOS = "drop table IF EXISTS " + METIER_TABLE_PHOTO;
 
     public static final String CREATE_TABLE_DOSSIERS = "CREATE TABLE " + METIER_TABLE_DOSSIER +
             " (" + METIER_ID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -50,6 +53,12 @@ public class SQLiteCustom extends SQLiteOpenHelper {
             "ref_dossier INTEGER)";
 
 
+    public static final String CREATE_TABLE_PHOTOS = "CREATE TABLE " + METIER_TABLE_PHOTO +
+            " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "raw BLOB," +
+            "width INTEGER," +
+            "height INTEGER," +
+            "ref_chambre INTEGER)";
 
     public SQLiteCustom(Context context, String name, SQLiteDatabase.CursorFactory factory) {
         super(context, name, factory, VERSION);
@@ -59,12 +68,14 @@ public class SQLiteCustom extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_DOSSIERS);
         db.execSQL(CREATE_TABLE_CHAMBRES);
+        db.execSQL(CREATE_TABLE_PHOTOS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(METIER_DROP_DOSSIERS);
         db.execSQL(METIER_DROP_CHAMBRES);
+        db.execSQL(METIER_DROP_PHOTOS);
         onCreate(db);
     }
 

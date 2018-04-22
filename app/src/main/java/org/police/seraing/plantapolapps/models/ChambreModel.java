@@ -3,6 +3,9 @@ package org.police.seraing.plantapolapps.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChambreModel implements Parcelable {
 
     private long   id;
@@ -28,6 +31,8 @@ public class ChambreModel implements Parcelable {
     private String marqueChauffages;
     private String puissanceChauffages;
     private long   ref_dossier;
+
+    private List<PhotoModel> listPhotos = new ArrayList<PhotoModel>();
 
     public final static String OUI_MODIF = "OUI";
     public final static String NON_MODIF = "NON";
@@ -61,6 +66,7 @@ public class ChambreModel implements Parcelable {
         this.ref_dossier = ref_dossier;
     }
 
+
     protected ChambreModel(Parcel in) {
         id = in.readLong();
         nom = in.readString();
@@ -85,6 +91,40 @@ public class ChambreModel implements Parcelable {
         marqueChauffages = in.readString();
         puissanceChauffages = in.readString();
         ref_dossier = in.readLong();
+        listPhotos = in.createTypedArrayList(PhotoModel.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(nom);
+        dest.writeString(longueur);
+        dest.writeString(largeur);
+        dest.writeString(nbPlants);
+        dest.writeString(nbPlantsM2);
+        dest.writeString(hauteurPlants);
+        dest.writeString(taillePots);
+        dest.writeString(nbLampes);
+        dest.writeString(puissanceLampes);
+        dest.writeString(marqueLampes);
+        dest.writeString(modifLampes);
+        dest.writeString(nbExtracteurs);
+        dest.writeString(marqueExtracteurs);
+        dest.writeString(nbFiltres);
+        dest.writeString(marqueFiltres);
+        dest.writeString(nbVentilateurs);
+        dest.writeString(marqueVentilateurs);
+        dest.writeString(puissanceVentilateurs);
+        dest.writeString(nbChauffages);
+        dest.writeString(marqueChauffages);
+        dest.writeString(puissanceChauffages);
+        dest.writeLong(ref_dossier);
+        dest.writeTypedList(listPhotos);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<ChambreModel> CREATOR = new Creator<ChambreModel>() {
@@ -284,6 +324,24 @@ public class ChambreModel implements Parcelable {
         this.ref_dossier = ref_dossier;
     }
 
+    public List<PhotoModel> getListPhotos() {
+        return listPhotos;
+    }
+
+    public void setListPhotos(List<PhotoModel> listPhotos) {
+        this.listPhotos = listPhotos;
+    }
+
+    public void addPhoto(PhotoModel photoModel){
+
+        photoModel.setRef_chambre(this.getId());
+        this.listPhotos.add(photoModel);
+    }
+
+    public void removePhoto(PhotoModel photoModel){
+        this.listPhotos.remove(photoModel);
+    }
+
     public static Creator<ChambreModel> getCREATOR() {
         return CREATOR;
     }
@@ -295,38 +353,6 @@ public class ChambreModel implements Parcelable {
     }
 
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeLong(id);
-        dest.writeString(nom);
-        dest.writeString(longueur);
-        dest.writeString(largeur);
-        dest.writeString(nbPlants);
-        dest.writeString(nbPlantsM2);
-        dest.writeString(hauteurPlants);
-        dest.writeString(taillePots);
-        dest.writeString(nbLampes);
-        dest.writeString(puissanceLampes);
-        dest.writeString(marqueLampes);
-        dest.writeString(modifLampes);
-        dest.writeString(nbExtracteurs);
-        dest.writeString(marqueExtracteurs);
-        dest.writeString(nbFiltres);
-        dest.writeString(marqueFiltres);
-        dest.writeString(nbVentilateurs);
-        dest.writeString(marqueVentilateurs);
-        dest.writeString(puissanceVentilateurs);
-        dest.writeString(nbChauffages);
-        dest.writeString(marqueChauffages);
-        dest.writeString(puissanceChauffages);
-        dest.writeLong(ref_dossier);
-    }
 
 
 }

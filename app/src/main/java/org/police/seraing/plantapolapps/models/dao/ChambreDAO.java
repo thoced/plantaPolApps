@@ -3,10 +3,12 @@ package org.police.seraing.plantapolapps.models.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.police.seraing.plantapolapps.models.ChambreModel;
+import org.police.seraing.plantapolapps.models.PhotoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class ChambreDAO extends DAO<ChambreModel> {
     public ChambreModel insert(ChambreModel model) {
 
         try {
+            DAOFactory.getInstance(getContext()).open().beginTransaction();
             ContentValues value = new ContentValues();
             value.put("nom", model.getNom());
             value.put("longueur", model.getLongueur());
@@ -49,10 +52,19 @@ public class ChambreDAO extends DAO<ChambreModel> {
 
             long rowid = DAOFactory.getInstance(getContext()).open().insert(TABLE_NAME, null, value);
             model.setId(rowid);
+
+            // ajout des photos
+            for(PhotoModel photoModel : model.getListPhotos()){
+                photoModel.setRef_chambre(model.getId());
+                PhotoModel ret = (PhotoModel) DAOFactory.getInstance(getContext()).createPHOTODAO().insert(photoModel);
+            }
+            DAOFactory.getInstance(getContext()).open().setTransactionSuccessful();
+
         }catch(android.database.SQLException e){
             Toast.makeText(getContext(),"(Exception)- Transaction annulée: ChambreDAO:insert", Toast.LENGTH_LONG).show();
         }
         finally {
+            DAOFactory.getInstance(getContext()).open().endTransaction();
             return model;
         }
 
@@ -97,11 +109,16 @@ public class ChambreDAO extends DAO<ChambreModel> {
     @Override
     public ChambreModel delete(ChambreModel model) {
         try {
+            DAOFactory.getInstance(getContext()).open().beginTransaction();
             DAOFactory.getInstance(getContext()).open().delete(TABLE_NAME, "id = ?", new String[]{String.valueOf(model.getId())});
+            DAOFactory.getInstance(getContext()).createPHOTODAO().deleteFromForeignKey(model.getId());
+            DAOFactory.getInstance(getContext()).open().setTransactionSuccessful();
+
         }catch(android.database.SQLException e){
             Toast.makeText(getContext(),"(Exception)- Transaction annulée: ChambreDAO:delete", Toast.LENGTH_LONG).show();
         }
         finally {
+            DAOFactory.getInstance(getContext()).open().endTransaction();
             return model;
         }
     }
@@ -140,9 +157,15 @@ public class ChambreDAO extends DAO<ChambreModel> {
                 chambreModel.setMarqueChauffages(cursor.getString(cursor.getColumnIndex("marqueChauffages")));
                 chambreModel.setPuissanceChauffages(cursor.getString(cursor.getColumnIndex("puissanceChauffages")));
                 chambreModel.setRef_dossier(cursor.getLong(cursor.getColumnIndex("ref_dossier")));
-                cursor.close();
+
+                List<PhotoModel> listPhotos = null;
+                listPhotos = DAOFactory.getInstance(getContext()).createPHOTODAO().selectFromForeignKey(chambreModel.getId());
+                for(PhotoModel photoModel : listPhotos)
+                    chambreModel.addPhoto(photoModel);
+
 
             }
+            cursor.close();
 
 
         }catch(android.database.SQLException e){
@@ -235,6 +258,11 @@ public class ChambreDAO extends DAO<ChambreModel> {
                 chambreModel.setMarqueChauffages(cursor.getString(cursor.getColumnIndex("marqueChauffages")));
                 chambreModel.setPuissanceChauffages(cursor.getString(cursor.getColumnIndex("puissanceChauffages")));
                 chambreModel.setRef_dossier(cursor.getLong(cursor.getColumnIndex("ref_dossier")));
+
+                List<PhotoModel> listPhotos = null;
+                listPhotos = DAOFactory.getInstance(getContext()).createPHOTODAO().selectFromForeignKey(chambreModel.getId());
+                for(PhotoModel photoModel : listPhotos)
+                    chambreModel.addPhoto(photoModel);
 
                 list.add(chambreModel);
             }

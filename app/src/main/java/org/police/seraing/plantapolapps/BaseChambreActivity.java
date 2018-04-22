@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import org.police.seraing.plantapolapps.models.ChambreModel;
@@ -53,6 +54,10 @@ public class BaseChambreActivity extends Activity {
         model.setNbChauffages(((EditText)findViewById(R.id.editNbChauffages)).getText().toString());
         model.setMarqueChauffages(((EditText)findViewById(R.id.editInfoChauffages)).getText().toString());
         model.setPuissanceChauffages(((EditText)findViewById(R.id.editPuissanceChauffages)).getText().toString());
+
+        LinearLayout linearPhotoLayout = findViewById(R.id.linearPhotoLayout);
+
+
 
     }
 }
